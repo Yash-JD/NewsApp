@@ -10,7 +10,6 @@ const News = (props) => {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [totalResults, setTotalResults] = useState(0)
-  // document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
 
 
   const capitalizeFirstLetter = (string) => {
@@ -32,6 +31,7 @@ const News = (props) => {
   }
 
   useEffect(() => {
+    document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
     updateNews();
   }, [])
 
@@ -46,7 +46,7 @@ const News = (props) => {
 
   const fetchMoreData = async () => {
     setPage(page + 1)
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json()
     setArticles(articles.concat(parsedData.articles))
@@ -55,7 +55,7 @@ const News = (props) => {
 
   return (
     <>
-      <h1 className='text-center my-3 p-2 text-center bg-warning rounded-pill' style={{ margin: '35px 0px' }}>Today's Top <span className="fw-bold text-primary">{capitalizeFirstLetter(props.category)}</span> Headlines</h1>
+      <h1 className='text-center bg-warning rounded-pill' style={{ margin: '83px 29px 10px', padding: '5px' }}>Today's Top <span className="fw-bold text-primary">{capitalizeFirstLetter(props.category)}</span> Headlines</h1>
       {loading && <Spinner />}
 
       <InfiniteScroll
